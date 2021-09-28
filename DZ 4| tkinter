@@ -1,1 +1,98 @@
+import tkinter as tk
 
+# создаем окно
+window=tk.Tk()
+window.title ("Как разбогатеть на нутрициологах")
+window.bind('<Escape>',lambda x: window.destroy())
+window.geometry ('700x500')
+
+#фрэйм для кнопок
+frm1 = tk.Frame (master = window, width=150, height=150)
+frm1.place(x = 500, y = 300) 
+
+# кнопки
+but1 = tk.Button(
+           text = "Рассчитать",
+           width = 20, height = 2,
+           bg = "gray" ,fg = "black", master = frm1)
+but1.pack()
+but2 = tk.Button(
+           text = "Сохранить данные",
+           width = 20, height = 2,
+           bg = "gray" ,fg = "black", master = frm1)
+but2.pack()
+but3 = tk.Button(
+           text = "Сохранить диаграмму",
+           width = 20, height = 2,
+           bg = "gray" ,fg = "black", master = frm1)
+but3.pack()
+
+# фрейм для диаграммы
+frm2 = tk.Frame (master = window, width=150, height=150)
+frm2.place(x = 0, y = 350) 
+
+#фрейм для заголовков
+frm3 = tk.Frame (master = window, width=20, height=20)
+frm3.place(x = 50, y = 0)
+
+# фрейм для таблицы
+frm4 = tk.Frame (master = window, width=20, height=200)
+frm4.place(x = 50, y = 20)
+
+#заголовки
+tk.Label(master=frm3,text=" Продукт")\
+    .grid(row=0, column=0)
+tk.Label(master=frm3,text=" Витамин А")\
+    .grid(row=0, column=1)
+tk.Label(master=frm3,text=" Витамин B")\
+    .grid(row=0, column=2)
+tk.Label(master=frm3,text=" Витамин C")\
+    .grid(row=0, column=3)
+tk.Label(master=frm3,text=" Витамин D")\
+    .grid(row=0, column=4)
+tk.Label(master=frm3,text=" Витамин E")\
+    .grid(row=0, column=5)
+
+#значения
+for i in range(5):
+    for j in range(6):
+        ent1 = tk.Entry(master=frm4,width=10,bd=1)
+        ent1.insert(1,10)
+        ent1.grid(row=i, column=j)
+     
+# фреймы для суточной нормы
+frm5 = tk.Frame (master = window, width=20, height=200)
+frm5.place(x = 0, y = 130)
+frm6 = tk.Frame (master = window, width=20, height=200)
+frm6.place(x = 114, y = 130)
+
+tk.Label(master=frm5,text=" Суточная норма")\
+    .grid(row=0, column=0)
+
+for i in range(5):
+    for j in range(1):
+        ent2 = tk.Entry(master=frm6,width=10,bd=1)
+        ent2.insert(1,100)
+        ent2.grid(row=j, column=i)#гридовать последним!!!
+        
+window.mainloop()
+
+#СЛАУ
+from scipy.linalg import solve
+import numpy as np
+import matplotlib.pyplot as plt
+
+A = np.ones (shape=(5,6))
+B = np.ones (shape=(1,5))
+
+#расчет
+#def Ras(A,B):
+for i in range(5):
+    for j in range(6):
+        A = ent1.get("1.0","end")
+for i in range(5):
+    for j in range(1):
+        B = ent2.get("1.0","end")
+A = np.delete(A, 1, 1)
+B = B.reshape (5,1)  
+x = solve (A,B)
