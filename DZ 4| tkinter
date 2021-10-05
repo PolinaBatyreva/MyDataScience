@@ -10,34 +10,18 @@ window.geometry ('700x500')
 frm1 = tk.Frame (master = window, width=150, height=150)
 frm1.place(x = 500, y = 300) 
 
-# кнопки
-but1 = tk.Button(
-           text = "Рассчитать",
-           width = 20, height = 2,
-           bg = "gray" ,fg = "black", master = frm1)
-but1.pack()
-but2 = tk.Button(
-           text = "Сохранить данные",
-           width = 20, height = 2,
-           bg = "gray" ,fg = "black", master = frm1)
-but2.pack()
-but3 = tk.Button(
-           text = "Сохранить диаграмму",
-           width = 20, height = 2,
-           bg = "gray" ,fg = "black", master = frm1)
-but3.pack()
-
-# фрейм для диаграммы
-frm2 = tk.Frame (master = window, width=150, height=150)
-frm2.place(x = 0, y = 350) 
-
-#фрейм для заголовков
-frm3 = tk.Frame (master = window, width=20, height=20)
-frm3.place(x = 50, y = 0)
+#СЛАУ
+from scipy.linalg import solve
+import numpy as np
+import matplotlib.pyplot as plt
 
 # фрейм для таблицы
 frm4 = tk.Frame (master = window, width=20, height=200)
 frm4.place(x = 50, y = 20)
+
+#фрейм для заголовков
+frm3 = tk.Frame (master = window, width=20, height=20)
+frm3.place(x = 50, y = 0)
 
 #заголовки
 tk.Label(master=frm3,text=" Продукт")\
@@ -74,25 +58,59 @@ for i in range(5):
         ent2 = tk.Entry(master=frm6,width=10,bd=1)
         ent2.insert(1,100)
         ent2.grid(row=j, column=i)#гридовать последним!!!
+A = tk.IntVar()
+B = tk.IntVar()
+#расчет
+def Ras(A,B):
+    for i in range(5):
+        for j in range(6):
+            A.get()
+            B.get()
+            A = tk.Entry(master=frm4,width=10,bd=1)
+    for i in range(5):
+        for j in range(1):
+            B= tk.Entry(master=frm4,width=10,bd=1)
+   # A = np.delete(A, 1, 1)
+   # B = B.reshape (5,1)  
+    x = solve (A,B)
+    return A
+
+def Savex(x):
+    x.to_csv('test_Random.csv', index=False, delimiter=';')
+def Saveplt():
+    plt.savefig('aaaaaa.png')
+
+# кнопки
+but1 = tk.Button(
+           text = "Рассчитать",
+           width = 20, height = 2,
+           bg = "gray" ,fg = "black", master = frm1, command = Ras(A,B))
+but1.pack()
+but2 = tk.Button(
+           text = "Сохранить данные",
+           width = 20, height = 2,
+           bg = "gray" ,fg = "black", master = frm1, command = Savex(x))
+but2.pack()
+but3 = tk.Button(
+           text = "Сохранить диаграмму",
+           width = 20, height = 2,
+           bg = "gray" ,fg = "black", master = frm1, command = Saveplt())
+but3.pack()
+
+# фрейм для диаграммы
+frm2 = tk.Frame (master = window, width=150, height=150)
+frm2.place(x = 0, y = 350) 
         
 window.mainloop()
 
-#СЛАУ
-from scipy.linalg import solve
-import numpy as np
-import matplotlib.pyplot as plt
+#A = np.ones (shape=(5,6))
+#B = np.ones (shape=(1,5))
 
-A = np.ones (shape=(5,6))
-B = np.ones (shape=(1,5))
-
-#расчет
-#def Ras(A,B):
-for i in range(5):
-    for j in range(6):
-        A = ent1.get("1.0","end")
-for i in range(5):
-    for j in range(1):
-        B = ent2.get("1.0","end")
-A = np.delete(A, 1, 1)
-B = B.reshape (5,1)  
-x = solve (A,B)
+#диаграмма
+labels = "Витамин А","Витамин B","Витамин C","Витамин D","Витамин E"
+sizes = x
+colors = ["gold","silver","green","blue","red"]
+explode (0,0,0.1,0.1,0)
+plt.pie(sizes,explode=explode, labels = labels, colors = colors,autopct='%1.1f%%',shadow=True, starttangle = 90)
+plt.axis('equal')
+plt.show(master=frm2)
