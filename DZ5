@@ -1,0 +1,16 @@
+import pandas as pd
+import numpy as np
+
+table_data = pd.read_csv(r"F:\Курс Питон для DS универ\2\ДЗ\Квартиры.csv", delimiter = ';')
+df = pd.DataFrame(table_data)
+df = pd.DataFrame (np.random.randint (0,100, size = df.shape))
+
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+
+x = df [1]
+y = df [2]
+z  = df [3]
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+ax.scatter(x,y,z, s = 20)
