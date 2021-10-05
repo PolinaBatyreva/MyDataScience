@@ -9,3 +9,4 @@ data_kvr.size
 data_kvr.dtype
 b=np.ones (data_kvr.shape)
 np.savetxt (r"C:\Users\Полина\Desktop\Курс Питон для DS универ\2\ДЗ\Res.txt",data_kvr*b,'%.2f ')
+
